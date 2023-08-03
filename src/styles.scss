@@ -1,1 +1,26 @@
-/* You can add global styles to this file, and also import other style files */
+
+html, body {
+  height: 100%;
+  background-color: #d1d5f0;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+
+// Boja paginatora
+.mat-mdc-select-value, .mat-mdc-select-arrow {
+  color: white !important;
+}
+.mat-mdc-paginator-icon {
+  fill: white;
+}
+.mdc-menu-surface.mat-mdc-select-panel {
+  background-color: #b8bfe6 !important;
+  color: white !important;
+}
+.mat-mdc-option .mdc-list-item__primary-text {
+  color: white !important;
+}
+//

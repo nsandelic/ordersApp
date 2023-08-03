@@ -1,0 +1,50 @@
+.action-button{
+  background-color: #ff4287;
+  color: white;
+  padding: 3px;
+  font-size: 1.1rem;
+  border-radius: 20%;
+  margin: 0 2px;
+  cursor: pointer;
+}
+.filter-wrapper{
+  width: 60%;
+  margin-top: 50px;
+
+}
+.filter-container{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+mat-header-cell {
+  background-color: #7986cb !important;
+  color: white !important;
+  font-size: 0.8rem;
+}
+.mat-mdc-table {
+  background-color: #b8bfe6 !important;
+
+}
+.mdc-data-table__cell {
+  color: white !important;
+}
+
+.mat-column-id {
+  flex: 0 0 6%;
+}
+.paginator{
+  background-color: #7986cb;
+  color: white !important;
+  box-shadow: 0 6px 7px rgba(0, 0, 0, 0.3);
+}
+.mat-mdc-select-value {
+  color: white !important;
+}
+
+mat-radio-button, mat-radio-group {
+  color: white !important;
+}
+
+

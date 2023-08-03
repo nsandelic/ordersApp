@@ -1,0 +1,77 @@
+<div class="wrapper">
+  <mat-card class="mat-card">
+    <mat-card-header>
+      <mat-card-title>Order Details</mat-card-title>
+    </mat-card-header>
+    <mat-card-actions class="actions-top">
+      <button mat-raised-button color="primary" class="action-top-btn" [disabled]="!order?.status" *ngIf="!editMode" (click)="onEdit()" >Edit mode</button>
+      <button mat-raised-button color="primary" class="action-top-btn" [disabled]="!order?.status" *ngIf="editMode" (click)="onOverview()">View Mode</button>
+      <button mat-raised-button color="accent" class="action-top-btn" [disabled]="!order?.status" (click)="deleteOrder()">Delete</button>
+      <button mat-raised-button color="primary" class="action-top-btn" *ngIf="order?.status" (click)="closeOrder()">Close Order</button>
+    </mat-card-actions>
+<!--    View Mode -->
+    <mat-card-content class="card-content" *ngIf="!editMode">
+      <div>
+        <strong>Name: </strong> {{ order?.name }}
+      </div>
+      <div>
+        <strong>Customer: </strong> {{ order?.customer }}
+      </div>
+      <div>
+        <strong>Date: </strong> {{ order?.date | date:"dd.MM.yyyy"}}
+      </div>
+      <div>
+        <strong>Price: </strong> {{ order?.price | currency:'EUR' }}
+      </div>
+      <div>
+        <strong>Status: </strong>
+        <span *ngIf="order?.status ">Open</span>
+        <span *ngIf="!order?.status ">Close</span>
+      </div>
+    </mat-card-content>
+<!--  Edit Mode -->
+    <mat-card-content class="card-content" *ngIf="editMode">
+      <form [formGroup]="form">
+        <div>
+          <strong>Name: </strong>
+          <mat-form-field appearance="outline">
+            <input matInput [type]="'text'" formControlName="name"/>
+            <mat-icon matSuffix [color]="form.get('name')?.valid ? 'accent': 'warn'">
+            </mat-icon>
+          </mat-form-field>
+        </div>
+        <div>
+          <strong>Customer: </strong>
+          <mat-form-field appearance="outline">
+            <input matInput [type]="'text'" formControlName="customer"/>
+            <mat-icon matSuffix [color]="form.get('customer')?.valid ? 'accent': 'warn'">
+            </mat-icon>
+          </mat-form-field>
+        </div>
+        <div>
+          <strong>Date: </strong>
+          <mat-form-field (click)="picker.open()" appearance="outline">
+            <input matInput readonly [matDatepicker]="picker" formControlName="date"
+                   placeholder="Date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div>
+          <strong>Price: </strong>
+          <mat-form-field appearance="outline">
+            <mat-label>Price</mat-label>
+            <input matInput [type]="'number'" formControlName="price" ng-pattern="/^[0-9]+(\.[0-9]{1,2})?$/" step="0.01"/>
+            <mat-icon matSuffix [color]="form.get('price')?.valid ? 'accent': 'warn'">
+            </mat-icon>
+          </mat-form-field>
+        </div>
+      </form>
+      <button mat-raised-button color="primary" class="action-top-btn" style="margin-top: 20px;" (click)="updateOrder()" >Save</button>
+    </mat-card-content>
+
+    <mat-card-actions class="actions-bottom">
+      <button mat-raised-button color="accent" (click)="goBack()">Go Back</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

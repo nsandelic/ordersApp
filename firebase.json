@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "dist/orders-app",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

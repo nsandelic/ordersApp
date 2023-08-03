@@ -1,0 +1,84 @@
+<div style="width: 60%;margin: auto;">
+
+      <div class="filter-wrapper">
+        <form [formGroup]="filterForm" style="width: 100%">
+          <div class="filter-container">
+            <mat-form-field appearance="outline" color="accent">
+              <input matInput [type]="'number'" formControlName="id" placeholder="Order number (ID)">
+            </mat-form-field>
+            <mat-form-field appearance="outline" color="accent">
+              <input matInput [type]="'text'" formControlName="name" placeholder="Order name">
+            </mat-form-field>
+            <mat-radio-group formControlName="status">
+              <mat-radio-button value="3">All</mat-radio-button>
+              <mat-radio-button value="1">Open</mat-radio-button>
+              <mat-radio-button value="0">Closed</mat-radio-button>
+            </mat-radio-group>
+            <button mat-raised-button color="accent" (click)="applyFilter()">Apply Filter</button>
+          </div>
+        </form>
+      </div>
+
+
+
+  <table mat-table [dataSource]="dataSource" matSort matPaginator class="mat-elevation-z8 order-table" id="orders-table">
+
+    <ng-container [matColumnDef]="column.columnDef" *ngFor="let column of columns; let i = index">
+      <ng-container [ngSwitch]="column.columnDef">
+
+        <ng-container *ngSwitchCase="'id'">
+          <mat-header-cell *matHeaderCellDef mat-sort-header="{{column.columnDef}}" >{{ column.header}}</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.id }} </mat-cell>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'date'">
+          <mat-header-cell *matHeaderCellDef mat-sort-header="{{column.columnDef}}" >{{ column.header}}</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.date | date:"dd.MM.yyyy"}} </mat-cell>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'price'">
+          <mat-header-cell *matHeaderCellDef >{{ column.header}}</mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{row.price | currency:'EUR' }} </mat-cell>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'status'">
+          <mat-header-cell *matHeaderCellDef>{{ column.header}}</mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <span *ngIf="row.status">Open</span>
+            <span *ngIf="!row.status">Close</span>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'actions'">
+          <mat-header-cell *matHeaderCellDef>
+            <fa-icon [icon]="faPlus" class="action-button" (click)="openDialog(dialogActionAdd, null)" matTooltip="Add new"></fa-icon>
+            <fa-icon [icon]="faPrint" class="action-button" (click)="printOrders()" matTooltip="Print orders"></fa-icon>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <fa-icon [icon]="faClipboard" class="action-button" matTooltip="Open Details" (click)="openDetails(row.id)"></fa-icon>
+            <fa-icon [icon]="faPen" *ngIf="row.status" class="action-button" (click)="openDialog('edit', row)"
+                     matTooltip="Edit"></fa-icon>
+            <fa-icon [icon]="faTrashCan" *ngIf="row.status" class="action-button" (click)="openDialog('delete', row)"
+                     matTooltip="Delete"></fa-icon>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container *ngSwitchDefault>
+          <mat-header-cell *matHeaderCellDef>{{ column.header }}</mat-header-cell>
+          <mat-cell *matCellDef="let row">{{ row[column.columnDef] }}</mat-cell>
+        </ng-container>
+
+      </ng-container>
+    </ng-container>
+
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </table>
+
+  <mat-paginator class="paginator"[pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+
+  <mat-card *ngIf="dataSource.data.length == 0;" class="mat-elevation-z8" style="height: 70px;justify-content: center;background-color: #b8bfe6">
+    <mat-card-title style="text-align: center; color: #ff4287">No Data!</mat-card-title>
+  </mat-card>
+</div>

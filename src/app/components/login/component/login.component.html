@@ -1,0 +1,40 @@
+<div class="formWrapper">
+  <h1>ORDERS APP</h1>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>LOGIN</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="loginForm">
+
+        <mat-form-field  color="accent">
+          <mat-label>Email</mat-label>
+          <input  type="email" matInput formControlName="email" [errorStateMatcher]="matcher">
+          <mat-error *ngIf="loginForm.controls['email'].hasError('email') && !loginForm.controls['email'].hasError('required')">
+            Please enter a valid email address
+          </mat-error>
+          <mat-error *ngIf="loginForm.controls['email'].hasError('required')">
+            Email is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field color="accent">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" [type]="hide ? 'password' : 'text'" [errorStateMatcher]="matcher">
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="loginForm.controls['password'].hasError('required')">
+            Password is <strong>required</strong>
+          </mat-error>
+          <mat-error *ngIf="loginForm.controls['password'].hasError('pattern')">
+            Password minimum length is 6. Must contain 1 lower, 1 upper case adn 1 special character.
+          </mat-error>
+        </mat-form-field>
+      </form>
+    </mat-card-content>
+    <mat-card-actions style="margin-top: 40px;">
+      <button mat-raised-button color="accent" [disabled]="!loginForm.valid" (click)="login()" class="loginBtn">Login</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
